@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FC5264F418D7DCCD0063A065 /* WHONewTaskFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FC5264F218D7DCCD0063A065 /* WHONewTaskFormViewController.m */; };
+		FC5264F518D7DCCD0063A065 /* WHONewTaskFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC5264F318D7DCCD0063A065 /* WHONewTaskFormViewController.xib */; };
+		FC5264FB18D7E80B0063A065 /* WHOTask.m in Sources */ = {isa = PBXBuildFile; fileRef = FC5264FA18D7E80B0063A065 /* WHOTask.m */; };
 		FC68042618D79A2600F006FE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC68042518D79A2600F006FE /* Foundation.framework */; };
 		FC68042818D79A2600F006FE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC68042718D79A2600F006FE /* CoreGraphics.framework */; };
 		FC68042A18D79A2600F006FE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC68042918D79A2600F006FE /* UIKit.framework */; };
@@ -35,6 +38,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FC5264F118D7DCCD0063A065 /* WHONewTaskFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHONewTaskFormViewController.h; sourceTree = "<group>"; };
+		FC5264F218D7DCCD0063A065 /* WHONewTaskFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHONewTaskFormViewController.m; sourceTree = "<group>"; };
+		FC5264F318D7DCCD0063A065 /* WHONewTaskFormViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WHONewTaskFormViewController.xib; sourceTree = "<group>"; };
+		FC5264F918D7E80B0063A065 /* WHOTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHOTask.h; sourceTree = "<group>"; };
+		FC5264FA18D7E80B0063A065 /* WHOTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHOTask.m; sourceTree = "<group>"; };
 		FC68042218D79A2600F006FE /* do_it.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = do_it.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC68042518D79A2600F006FE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FC68042718D79A2600F006FE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -117,8 +125,13 @@
 			children = (
 				FC68043418D79A2600F006FE /* WHOAppDelegate.h */,
 				FC68043518D79A2600F006FE /* WHOAppDelegate.m */,
+				FC5264F918D7E80B0063A065 /* WHOTask.h */,
+				FC5264FA18D7E80B0063A065 /* WHOTask.m */,
 				FC68045618D7AAD300F006FE /* WHOTaskTableViewController.h */,
 				FC68045718D7AAD300F006FE /* WHOTaskTableViewController.m */,
+				FC5264F118D7DCCD0063A065 /* WHONewTaskFormViewController.h */,
+				FC5264F218D7DCCD0063A065 /* WHONewTaskFormViewController.m */,
+				FC5264F318D7DCCD0063A065 /* WHONewTaskFormViewController.xib */,
 				FC68045918D7B9CF00F006FE /* WHOTaskCell.h */,
 				FC68045A18D7B9CF00F006FE /* WHOTaskCell.m */,
 				FC68045B18D7B9CF00F006FE /* WHOTaskCell.xib */,
@@ -235,6 +248,7 @@
 			files = (
 				FC68043018D79A2600F006FE /* InfoPlist.strings in Resources */,
 				FC68045D18D7B9CF00F006FE /* WHOTaskCell.xib in Resources */,
+				FC5264F518D7DCCD0063A065 /* WHONewTaskFormViewController.xib in Resources */,
 				FC68043818D79A2600F006FE /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,8 +269,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC68043218D79A2600F006FE /* main.m in Sources */,
+				FC5264FB18D7E80B0063A065 /* WHOTask.m in Sources */,
 				FC68045C18D7B9CF00F006FE /* WHOTaskCell.m in Sources */,
 				FC68045818D7AAD300F006FE /* WHOTaskTableViewController.m in Sources */,
+				FC5264F418D7DCCD0063A065 /* WHONewTaskFormViewController.m in Sources */,
 				FC68043618D79A2600F006FE /* WHOAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -454,6 +470,7 @@
 				FC68045018D79A2600F006FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FC68045118D79A2600F006FE /* Build configuration list for PBXNativeTarget "do_itTests" */ = {
 			isa = XCConfigurationList;
@@ -462,6 +479,7 @@
 				FC68045318D79A2600F006FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

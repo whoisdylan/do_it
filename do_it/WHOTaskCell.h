@@ -10,6 +10,6 @@
 
 @interface WHOTaskCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *taskLabel;
-@property (strong, nonatomic) IBOutlet UILabel *duedateLabel;
+@property (strong, nonatomic) IBOutlet UILabel *deadlineLabel;
 
 @end

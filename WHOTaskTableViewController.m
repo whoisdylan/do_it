@@ -7,8 +7,11 @@
 //
 
 #import "WHOTaskTableViewController.h"
+#import "WHONewTaskFormViewController.h"
+#import "WHOTask.h"
+#import "WHOTaskCell.h"
 
-@interface WHOTaskTableViewController ()
+@interface WHOTaskTableViewController () <WHOTaskProtocol>
 
 @end
 
@@ -34,11 +37,17 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    UIBarButtonItem* newTaskButton = [[UIBarButtonItem alloc] initWithTitle:@"New Task" style:UIBarButtonItemStylePlain target:self action:@selector(newTask:)];
+    UIBarButtonItem* newTaskButton = [[UIBarButtonItem alloc] initWithTitle:@"New task" style:UIBarButtonItemStylePlain target:self action:@selector(newTask:)];
     self.navigationItem.rightBarButtonItem = newTaskButton;
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     [self.tableView registerNib:[UINib nibWithNibName:@"WHOTaskCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"TaskCell"];
     [self.tableView reloadData];
+}
+
+- (void)newTask:(id)sender {
+    WHONewTaskFormViewController* form = [[WHONewTaskFormViewController alloc] init];
+    form.delegate = self;
+    [self.navigationController pushViewController:form animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -47,32 +56,43 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
+- (void)receivedNewTask:(NSString *)task withDeadline:(NSString *)deadline {
+    WHOTask* newTask = [[WHOTask alloc] initWithTask:task withDeadline:deadline];
+    [self.tasks addObject:newTask];
+    [self.tableView reloadData];
+}
 
+#pragma mark - Table view data source
+/*
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 0;
 }
+*/
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return self.tasks.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+    WHOTaskCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TaskCell"];
+    if (!cell) {
+        cell = [[WHOTaskCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TaskCell"];
+    }
+    WHOTask* task = [self.tasks objectAtIndex:indexPath.row];
+    cell.taskLabel.text = task.task;
+    cell.deadlineLabel.text = task.deadline;
     return cell;
 }
-*/
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 100.0;
+}
 
 /*
 // Override to support conditional editing of the table view.
