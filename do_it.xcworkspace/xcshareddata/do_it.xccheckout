@@ -5,24 +5,20 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>BF91E925-CEE8-4611-8D44-FC303F87CB88</string>
+	<string>6C5C7E1F-BFB5-4E44-88B5-FB386AE06A67</string>
 	<key>IDESourceControlProjectName</key>
 	<string>do_it</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>1CBB79C7-FA0A-4013-852F-13AB355E652F</key>
-		<string>https://github.com/CEWendel/SWTableViewCell.git</string>
 		<key>FF955A8F-E7DF-46D1-ADBA-535EFD4CC7AA</key>
 		<string>https://github.com/whoisdylan/do_it.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>do_it.xcodeproj/project.xcworkspace</string>
+	<string>do_it.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>1CBB79C7-FA0A-4013-852F-13AB355E652F</key>
-		<string>../../../SWTableViewCell</string>
 		<key>FF955A8F-E7DF-46D1-ADBA-535EFD4CC7AA</key>
-		<string>../..</string>
+		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/whoisdylan/do_it.git</string>
@@ -39,14 +35,6 @@
 			<string>FF955A8F-E7DF-46D1-ADBA-535EFD4CC7AA</string>
 			<key>IDESourceControlWCCName</key>
 			<string>do_it</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>1CBB79C7-FA0A-4013-852F-13AB355E652F</string>
-			<key>IDESourceControlWCCName</key>
-			<string>SWTableViewCell</string>
 		</dict>
 	</array>
 </dict>

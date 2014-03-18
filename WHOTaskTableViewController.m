@@ -11,7 +11,7 @@
 #import "WHOTask.h"
 #import "WHOTaskCell.h"
 
-@interface WHOTaskTableViewController () <WHOTaskProtocol>
+@interface WHOTaskTableViewController () <WHOTaskProtocol, SWTableViewCellDelegate>
 
 @end
 
@@ -62,6 +62,18 @@
     [self.tableView reloadData];
 }
 
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    switch (index) {
+        case 0: {
+            //did it
+            NSIndexPath* cellIndexPath = [self.tableView indexPathForCell:cell];
+            [self.tasks removeObjectAtIndex:cellIndexPath.row];
+            [self.tableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            break;
+        }
+    }
+}
+
 #pragma mark - Table view data source
 /*
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -84,14 +96,21 @@
     if (!cell) {
         cell = [[WHOTaskCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TaskCell"];
     }
+    
+    NSMutableArray* rightUtilityButtons = [NSMutableArray new];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:30.0/255.0 green:252.0/255.0 blue:152.0/255.0 alpha:1.0] title:@"Did it!"];
+    cell.rightUtilityButtons = rightUtilityButtons;
+    cell.delegate = self;
+    
     WHOTask* task = [self.tasks objectAtIndex:indexPath.row];
     cell.taskLabel.text = task.task;
     cell.deadlineLabel.text = task.deadline;
+    [cell setCellHeight:cell.frame.size.height];
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100.0;
+    return 85.0;
 }
 
 /*

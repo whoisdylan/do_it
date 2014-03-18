@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SWTableViewCell.h>
 
-@interface WHOTaskCell : UITableViewCell
+@interface WHOTaskCell : SWTableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *taskLabel;
 @property (strong, nonatomic) IBOutlet UILabel *deadlineLabel;
 
