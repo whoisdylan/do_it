@@ -14,7 +14,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Task" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="yJu-xd-Dgk">
-                        <rect key="frame" x="20" y="20" width="280" height="21"/>
+                        <rect key="frame" x="20" y="8" width="280" height="33"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -30,7 +30,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="deadlineLabel" destination="QEj-MA-FSJ" id="WSM-IO-4hw"/>
-                <outlet property="taskLabel" destination="yJu-xd-Dgk" id="hJz-Ws-lXa"/>
+                <outlet property="taskLabel" destination="yJu-xd-Dgk" id="w0k-9K-q5P"/>
             </connections>
         </tableViewCell>
     </objects>

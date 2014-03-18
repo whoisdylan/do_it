@@ -8,10 +8,11 @@
 
 #import "WHOTaskTableViewController.h"
 #import "WHONewTaskFormViewController.h"
+#import "WHOEditTaskFormViewController.h"
 #import "WHOTask.h"
 #import "WHOTaskCell.h"
 
-@interface WHOTaskTableViewController () <WHOTaskProtocol, SWTableViewCellDelegate>
+@interface WHOTaskTableViewController () <WHOTaskProtocol, WHOEditTaskProtocol, SWTableViewCellDelegate>
 
 @end
 
@@ -37,10 +38,16 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    UIBarButtonItem* newTaskButton = [[UIBarButtonItem alloc] initWithTitle:@"New task" style:UIBarButtonItemStylePlain target:self action:@selector(newTask:)];
+//    UIBarButtonItem* newTaskButton = [[UIBarButtonItem alloc] initWithTitle:@"add a task" style:UIBarButtonItemStylePlain target:self action:@selector(newTask:)];
+    UIBarButtonItem* newTaskButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newTask:)];
     self.navigationItem.rightBarButtonItem = newTaskButton;
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+//    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    [self.tableView setRowHeight:85.0];
     [self.tableView registerNib:[UINib nibWithNibName:@"WHOTaskCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"TaskCell"];
+    
+//    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+//    [self.tableView addGestureRecognizer:gestureRecognizer];
+    
     [self.tableView reloadData];
 }
 
@@ -62,16 +69,29 @@
     [self.tableView reloadData];
 }
 
+- (void)receivedEdittedTask:(NSString *)task withIndexPath:(NSIndexPath *)indexPath {
+    WHOTaskCell* cell = (WHOTaskCell* ) [self.tableView cellForRowAtIndexPath:indexPath];
+    cell.taskLabel.text = task;
+}
+
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
     switch (index) {
         case 0: {
             //did it
             NSIndexPath* cellIndexPath = [self.tableView indexPathForCell:cell];
             [self.tasks removeObjectAtIndex:cellIndexPath.row];
-            [self.tableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationRight];
             break;
         }
     }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"selected cell");
+    WHOEditTaskFormViewController* form = [[WHOEditTaskFormViewController alloc] init];
+    form.delegate = self;
+    form.indexPath = indexPath;
+    [self.navigationController pushViewController:form animated:YES];
 }
 
 #pragma mark - Table view data source
@@ -93,9 +113,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     WHOTaskCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TaskCell"];
-    if (!cell) {
-        cell = [[WHOTaskCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TaskCell"];
-    }
+//    if (!cell) {
+//        cell = [[WHOTaskCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TaskCell"];
+//    }
     
     NSMutableArray* rightUtilityButtons = [NSMutableArray new];
     [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:30.0/255.0 green:252.0/255.0 blue:152.0/255.0 alpha:1.0] title:@"Did it!"];
