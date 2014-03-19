@@ -44,10 +44,6 @@
 //    self.navigationItem.leftBarButtonItem = self.editButtonItem;
     [self.tableView setRowHeight:85.0];
     [self.tableView registerNib:[UINib nibWithNibName:@"WHOTaskCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"TaskCell"];
-    
-//    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
-//    [self.tableView addGestureRecognizer:gestureRecognizer];
-    
     [self.tableView reloadData];
 }
 
@@ -74,6 +70,16 @@
     cell.taskLabel.text = task;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"selected cell");
+    WHOEditTaskFormViewController* form = [[WHOEditTaskFormViewController alloc] init];
+    form.delegate = self;
+    form.indexPath = indexPath;
+    [self.navigationController pushViewController:form animated:YES];
+}
+
+#pragma mark - SWTableViewCell stuff
+
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
     switch (index) {
         case 0: {
@@ -84,14 +90,6 @@
             break;
         }
     }
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"selected cell");
-    WHOEditTaskFormViewController* form = [[WHOEditTaskFormViewController alloc] init];
-    form.delegate = self;
-    form.indexPath = indexPath;
-    [self.navigationController pushViewController:form animated:YES];
 }
 
 #pragma mark - Table view data source
@@ -118,8 +116,10 @@
 //    }
     
     NSMutableArray* rightUtilityButtons = [NSMutableArray new];
+//    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:255.0/255.0 green:216.0/255.0 blue:191.0/255.0 alpha:1.0] title:@"Edit"];
     [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor colorWithRed:30.0/255.0 green:252.0/255.0 blue:152.0/255.0 alpha:1.0] title:@"Did it!"];
     cell.rightUtilityButtons = rightUtilityButtons;
+    cell.containingTableView = self.tableView;
     cell.delegate = self;
     
     WHOTask* task = [self.tasks objectAtIndex:indexPath.row];
