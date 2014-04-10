@@ -8,6 +8,8 @@
 
 #import "WHOAppDelegate.h"
 #import "WHOTaskTableViewController.h"
+#import "WHOLoginViewController.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @implementation WHOAppDelegate
 
@@ -16,10 +18,16 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
-    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:[[WHOTaskTableViewController alloc] initWithStyle:UITableViewStylePlain]];
-    self.window.rootViewController = nav;
+//    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:[[WHOTaskTableViewController alloc] initWithStyle:UITableViewStylePlain]];
+    WHOLoginViewController* vc = [[WHOLoginViewController alloc] init];
+    self.window.rootViewController = vc;
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+    return wasHandled;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

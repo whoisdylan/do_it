@@ -13,6 +13,8 @@
 		FC5264FB18D7E80B0063A065 /* WHOTask.m in Sources */ = {isa = PBXBuildFile; fileRef = FC5264FA18D7E80B0063A065 /* WHOTask.m */; };
 		FC52653F18D8D8E00063A065 /* WHOEditTaskFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FC52653D18D8D8E00063A065 /* WHOEditTaskFormViewController.m */; };
 		FC52654018D8D8E00063A065 /* WHOEditTaskFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC52653E18D8D8E00063A065 /* WHOEditTaskFormViewController.xib */; };
+		FC59C69E18F73C0400188EAA /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC59C69D18F73C0400188EAA /* FacebookSDK.framework */; };
+		FC59C6A118F73D3E00188EAA /* WHOLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FC59C6A018F73D3E00188EAA /* WHOLoginViewController.m */; };
 		FC68042618D79A2600F006FE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC68042518D79A2600F006FE /* Foundation.framework */; };
 		FC68042818D79A2600F006FE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC68042718D79A2600F006FE /* CoreGraphics.framework */; };
 		FC68042A18D79A2600F006FE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC68042918D79A2600F006FE /* UIKit.framework */; };
@@ -51,6 +53,9 @@
 		FC52653C18D8D8E00063A065 /* WHOEditTaskFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHOEditTaskFormViewController.h; sourceTree = "<group>"; };
 		FC52653D18D8D8E00063A065 /* WHOEditTaskFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHOEditTaskFormViewController.m; sourceTree = "<group>"; };
 		FC52653E18D8D8E00063A065 /* WHOEditTaskFormViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WHOEditTaskFormViewController.xib; sourceTree = "<group>"; };
+		FC59C69D18F73C0400188EAA /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		FC59C69F18F73D3E00188EAA /* WHOLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHOLoginViewController.h; sourceTree = "<group>"; };
+		FC59C6A018F73D3E00188EAA /* WHOLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHOLoginViewController.m; sourceTree = "<group>"; };
 		FC68042218D79A2600F006FE /* do_it.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = do_it.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC68042518D79A2600F006FE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FC68042718D79A2600F006FE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -80,6 +85,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC68042818D79A2600F006FE /* CoreGraphics.framework in Frameworks */,
+				FC59C69E18F73C0400188EAA /* FacebookSDK.framework in Frameworks */,
 				FC68042A18D79A2600F006FE /* UIKit.framework in Frameworks */,
 				FC68042618D79A2600F006FE /* Foundation.framework in Frameworks */,
 				280F0474A4DF42ECA075EA10 /* libPods.a in Frameworks */,
@@ -122,6 +128,7 @@
 		FC68042418D79A2600F006FE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FC59C69D18F73C0400188EAA /* FacebookSDK.framework */,
 				FC68042518D79A2600F006FE /* Foundation.framework */,
 				FC68042718D79A2600F006FE /* CoreGraphics.framework */,
 				FC68042918D79A2600F006FE /* UIKit.framework */,
@@ -136,6 +143,8 @@
 			children = (
 				FC68043418D79A2600F006FE /* WHOAppDelegate.h */,
 				FC68043518D79A2600F006FE /* WHOAppDelegate.m */,
+				FC59C69F18F73D3E00188EAA /* WHOLoginViewController.h */,
+				FC59C6A018F73D3E00188EAA /* WHOLoginViewController.m */,
 				FC5264F918D7E80B0063A065 /* WHOTask.h */,
 				FC5264FA18D7E80B0063A065 /* WHOTask.m */,
 				FC68045618D7AAD300F006FE /* WHOTaskTableViewController.h */,
@@ -319,6 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC68043218D79A2600F006FE /* main.m in Sources */,
+				FC59C6A118F73D3E00188EAA /* WHOLoginViewController.m in Sources */,
 				FC5264FB18D7E80B0063A065 /* WHOTask.m in Sources */,
 				FC68045C18D7B9CF00F006FE /* WHOTaskCell.m in Sources */,
 				FC68045818D7AAD300F006FE /* WHOTaskTableViewController.m in Sources */,
@@ -442,9 +452,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/dylan/Documents/FacebookSDK,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "do_it/do_it-Prefix.pch";
 				INFOPLIST_FILE = "do_it/do_it-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -456,9 +471,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/dylan/Documents/FacebookSDK,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "do_it/do_it-Prefix.pch";
 				INFOPLIST_FILE = "do_it/do_it-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
