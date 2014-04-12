@@ -11,6 +11,7 @@
 #import "WHOEditTaskFormViewController.h"
 #import "WHOTask.h"
 #import "WHOTaskCell.h"
+#import <Parse/Parse.h>
 
 @interface WHOTaskTableViewController () <WHOTaskProtocol, WHOEditTaskProtocol, SWTableViewCellDelegate>
 
@@ -61,6 +62,17 @@
 
 - (void)receivedNewTask:(NSString *)task withDeadline:(NSString *)deadline {
     WHOTask* newTask = [[WHOTask alloc] initWithTask:task withDeadline:deadline];
+    PFObject* pf = [PFObject objectWithClassName:@"Task"];
+    [pf setObject:task forKey:@"task"];
+    [pf setObject:deadline forKey:@"deadline"];
+    [pf saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded && !error) {
+            [pf refreshInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                //what
+            }];
+            newTask.pf_id = pf.objectId;
+        }
+    }];
     [self.tasks addObject:newTask];
     [self.tableView reloadData];
 }
@@ -85,6 +97,11 @@
         case 0: {
             //did it
             NSIndexPath* cellIndexPath = [self.tableView indexPathForCell:cell];
+            WHOTask* task = [self.tasks objectAtIndex:cellIndexPath.row];
+            PFQuery* query = [PFQuery queryWithClassName:@"Task"];
+            [query getObjectInBackgroundWithId:task.pf_id block:^(PFObject *object, NSError *error) {
+                [object deleteInBackground];
+            }];
             [self.tasks removeObjectAtIndex:cellIndexPath.row];
             [self.tableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationRight];
             break;

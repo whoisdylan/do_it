@@ -10,6 +10,7 @@
 #import "WHOTaskTableViewController.h"
 #import "WHOLoginViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import <Parse/Parse.h>
 
 @implementation WHOAppDelegate
 
@@ -18,14 +19,12 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
-//    if (FBSession.activeSession.state != FBSessionStateOpen) {
-        WHOLoginViewController* vc = [[WHOLoginViewController alloc] init];
-        self.window.rootViewController = vc;
-//    }
-//    else {
-//        UINavigationController* vc = [[UINavigationController alloc] initWithRootViewController:[[WHOTaskTableViewController alloc] initWithStyle:UITableViewStylePlain]];
-//        self.window.rootViewController = vc;
-//    }
+    
+    //Parse things
+    [Parse setApplicationId:@"Zl9asM3UZGnygzjwGrBeLI67zXfobzQoY7OSXnuz" clientKey:@"RQ5SPFUkR4QSdKoXXJl5bwAk5iCCRVbFxRGK0HNo"];
+    
+    WHOLoginViewController* vc = [[WHOLoginViewController alloc] init];
+    self.window.rootViewController = vc;
     [self.window makeKeyAndVisible];
     return YES;
 }

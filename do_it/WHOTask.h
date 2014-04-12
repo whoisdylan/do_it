@@ -12,4 +12,5 @@
 -(instancetype) initWithTask:(NSString *)task withDeadline:(NSString *)deadline;
 @property (nonatomic, strong) NSString *task;
 @property (nonatomic, strong) NSString *deadline;
+@property (nonatomic, strong) NSString *pf_id;
 @end
