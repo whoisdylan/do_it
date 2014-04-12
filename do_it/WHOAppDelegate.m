@@ -18,9 +18,14 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
-//    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:[[WHOTaskTableViewController alloc] initWithStyle:UITableViewStylePlain]];
-    WHOLoginViewController* vc = [[WHOLoginViewController alloc] init];
-    self.window.rootViewController = vc;
+//    if (FBSession.activeSession.state != FBSessionStateOpen) {
+        WHOLoginViewController* vc = [[WHOLoginViewController alloc] init];
+        self.window.rootViewController = vc;
+//    }
+//    else {
+//        UINavigationController* vc = [[UINavigationController alloc] initWithRootViewController:[[WHOTaskTableViewController alloc] initWithStyle:UITableViewStylePlain]];
+//        self.window.rootViewController = vc;
+//    }
     [self.window makeKeyAndVisible];
     return YES;
 }

@@ -8,8 +8,9 @@
 
 #import "WHOLoginViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "WHOTaskTableViewController.h"
 
-@interface WHOLoginViewController ()
+@interface WHOLoginViewController () <FBLoginViewDelegate>
 
 @end
 
@@ -32,11 +33,23 @@
     
     //make and place login view
     FBLoginView* loginView = [[FBLoginView alloc] initWithPublishPermissions:@[@"publish_actions"] defaultAudience:FBSessionDefaultAudienceFriends];
+    loginView.delegate = self;
     [loginView setCenter:(CGPoint) {
         .x = CGRectGetMidX(screenRect),
         .y = CGRectGetMaxY(screenRect) - 100
     }];
     [self.view addSubview:loginView];
+    loginView.hidden = YES;
+}
+
+- (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView {
+    loginView.hidden = NO;
+    
+}
+
+- (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
+        UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:[[WHOTaskTableViewController alloc] initWithStyle:UITableViewStylePlain]];
+        [self presentViewController:nav animated:NO completion:nil];
 }
 
 - (void)didReceiveMemoryWarning
