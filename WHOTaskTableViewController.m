@@ -33,6 +33,19 @@
 {
     [super viewDidLoad];
     
+    //load the current user's tasks from Parse
+    PFQuery* query = [PFQuery queryWithClassName:@"Task"];
+    [query whereKey:@"user" equalTo:[PFUser currentUser]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        for (PFObject* obj in objects) {
+            WHOTask* task = [[WHOTask alloc] initWithTask:obj[@"task"] withDeadline:obj[@"deadline"]];
+            task.pf_id = obj.objectId;
+            [self.tasks addObject:task];
+        }
+        [self.tableView reloadData];
+    }];
+    
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -45,7 +58,7 @@
 //    self.navigationItem.leftBarButtonItem = self.editButtonItem;
     [self.tableView setRowHeight:85.0];
     [self.tableView registerNib:[UINib nibWithNibName:@"WHOTaskCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"TaskCell"];
-    [self.tableView reloadData];
+    
 }
 
 - (void)newTask:(id)sender {
@@ -67,6 +80,7 @@
 //    [pf setObject:deadline forKey:@"deadline"];
     pf[@"task"] = task;
     pf[@"deadline"] = deadline;
+    pf[@"user"] = [PFUser currentUser];
     [pf saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded && !error) {
             [pf refreshInBackgroundWithBlock:^(PFObject *object, NSError *error) {
