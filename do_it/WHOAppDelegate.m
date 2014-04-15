@@ -22,6 +22,7 @@
     
     //Parse things
     [Parse setApplicationId:@"Zl9asM3UZGnygzjwGrBeLI67zXfobzQoY7OSXnuz" clientKey:@"RQ5SPFUkR4QSdKoXXJl5bwAk5iCCRVbFxRGK0HNo"];
+    [PFFacebookUtils initializeFacebook];
     
     WHOLoginViewController* vc = [[WHOLoginViewController alloc] init];
     self.window.rootViewController = vc;
@@ -30,7 +31,7 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+    BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication withSession:[PFFacebookUtils session]];
     return wasHandled;
 }
 
@@ -54,6 +55,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [FBAppCall handleDidBecomeActiveWithSession:[PFFacebookUtils session]];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

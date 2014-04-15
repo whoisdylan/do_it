@@ -63,12 +63,14 @@
 - (void)receivedNewTask:(NSString *)task withDeadline:(NSString *)deadline {
     WHOTask* newTask = [[WHOTask alloc] initWithTask:task withDeadline:deadline];
     PFObject* pf = [PFObject objectWithClassName:@"Task"];
-    [pf setObject:task forKey:@"task"];
-    [pf setObject:deadline forKey:@"deadline"];
+//    [pf setObject:task forKey:@"task"];
+//    [pf setObject:deadline forKey:@"deadline"];
+    pf[@"task"] = task;
+    pf[@"deadline"] = deadline;
     [pf saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded && !error) {
             [pf refreshInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                //what
+                //get the object ID from Parse
             }];
             newTask.pf_id = pf.objectId;
         }
@@ -78,12 +80,20 @@
 }
 
 - (void)receivedEdittedTask:(NSString *)task withIndexPath:(NSIndexPath *)indexPath {
-    WHOTaskCell* cell = (WHOTaskCell* ) [self.tableView cellForRowAtIndexPath:indexPath];
-    cell.taskLabel.text = task;
+//    WHOTaskCell* cell = (WHOTaskCell* ) [self.tableView cellForRowAtIndexPath:indexPath];
+    WHOTask* taskObject = [self.tasks objectAtIndex:indexPath.row];
+    PFQuery* query = [PFQuery queryWithClassName:@"Task"];
+    [query getObjectInBackgroundWithId:taskObject.pf_id block:^(PFObject *object, NSError *error) {
+        object[@"task"] = task;
+        [object saveInBackground];
+    }];
+//    cell.taskLabel.text = task;
+    taskObject.task = task;
+    [self.tableView reloadData];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"selected cell");
+//    NSLog(@"selected cell");
     WHOEditTaskFormViewController* form = [[WHOEditTaskFormViewController alloc] init];
     form.delegate = self;
     form.indexPath = indexPath;
