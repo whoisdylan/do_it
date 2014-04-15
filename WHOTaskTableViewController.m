@@ -42,6 +42,7 @@
             task.pf_id = obj.objectId;
             [self.tasks addObject:task];
         }
+        [self sortTasks];
         [self.tableView reloadData];
     }];
     
@@ -90,6 +91,7 @@
         }
     }];
     [self.tasks addObject:newTask];
+    [self sortTasks];
     [self.tableView reloadData];
 }
 
@@ -112,6 +114,16 @@
     form.delegate = self;
     form.indexPath = indexPath;
     [self.navigationController pushViewController:form animated:YES];
+}
+
+- (void)sortTasks {
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat: @"eee',' M/d/yy 'at' h:mm a"];
+    [self.tasks sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSDate* date1 = [formatter dateFromString:((WHOTask* )obj1).deadline];
+        NSDate* date2 = [formatter dateFromString:((WHOTask* )obj2).deadline];
+        return [date1 compare:date2];
+    }];
 }
 
 #pragma mark - SWTableViewCell stuff
