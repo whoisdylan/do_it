@@ -24,6 +24,7 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        self.tableView.backgroundColor = [UIColor darkGrayColor];
         self.tasks = [NSMutableArray array];
     }
     return self;

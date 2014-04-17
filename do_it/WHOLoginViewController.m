@@ -14,7 +14,7 @@
 @interface WHOLoginViewController () <FBLoginViewDelegate>
 
 @property (nonatomic, strong) UIButton* loginButton;
-@property (nonatomic, strong) UILabel* titleLabel;
+@property (nonatomic, strong) UIButton* loginButton2;
 @property (nonatomic) BOOL isUserLoggedIn;
 
 @end
@@ -43,7 +43,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [PFUser logOut];
+//    [PFUser logOut];
    
     if ([PFUser currentUser] && [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
         self.isUserLoggedIn = YES;
@@ -65,61 +65,63 @@
 //    [self.view addSubview:loginView];
 //    loginView.hidden = YES;
     
-    //add app title
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.titleLabel.text = @"Do It";
-//    self.titleLabel.font = [UIFont systemFontOfSize:50.0];
-    self.titleLabel.font = [UIFont fontWithName:@"Superclarendon-Regular" size:72.0];
-    self.titleLabel.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:.75];
-    // Constants
-    // The width of the shadow offset of our label.
-    static const CGFloat kHPTTitleLabelShadowOffsetWidth = 1;
-    // The height of the shadow offset of our label.
-    static const CGFloat kHPTTitleLabelShadowOffsetHeight = 1;
-    // The shadow radius of our label.
-    static const CGFloat kHPTTitleLabelShadowRadius = 5.0;
-    // The shadow opacity of our label.
-    static const CGFloat kHPTTitleLabelShadowOpacity = 1.0;
-    // The offset between the top of the screen, and our main label.
-    
-    // Handle the label's shadow.
-    self.titleLabel.layer.shadowColor = [UIColor darkGrayColor].CGColor;
-    self.titleLabel.layer.shadowOffset = CGSizeMake(kHPTTitleLabelShadowOffsetWidth,
-                                                    kHPTTitleLabelShadowOffsetHeight);
-    self.titleLabel.layer.shadowRadius = kHPTTitleLabelShadowRadius;
-    self.titleLabel.layer.shadowOpacity = kHPTTitleLabelShadowOpacity;
-    
-    [self.titleLabel sizeToFit];
-    self.titleLabel.textAlignment = NSTextAlignmentCenter;
-    static const CGFloat kHPTLabelTopOffset = 100.0;
-    self.titleLabel.center = (CGPoint) {
-        .x = CGRectGetMidX(screenRect),
-        .y = kHPTLabelTopOffset
-    };
-    [self.view addSubview:self.titleLabel];
-
-    
     //make custom button for parse and facebook login
     self.loginButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [self.loginButton addTarget:self action:@selector(loginButtonHandler:) forControlEvents:UIControlEventTouchUpInside];
-    [self.loginButton addTarget:self action:@selector(lightenOnTouch:) forControlEvents:UIControlEventTouchDown|UIControlEventTouchDragEnter];
-    [self.loginButton addTarget:self action:@selector(darkenOnRelease:) forControlEvents:UIControlEventTouchUpInside|UIControlEventTouchDragExit];
-    [self.loginButton setTitle:@"Stop procrastinating" forState:UIControlStateNormal];
+//    [self.loginButton addTarget:self action:@selector(lightenOnTouch:) forControlEvents:UIControlEventTouchDown|UIControlEventTouchDragEnter];
+//    [self.loginButton addTarget:self action:@selector(darkenOnRelease:) forControlEvents:UIControlEventTouchUpInside|UIControlEventTouchDragExit];
+    [self.loginButton addTarget:self action:@selector(selectOtherButton) forControlEvents:UIControlEventTouchDown];
+    [self.loginButton addTarget:self action:@selector(highlightOtherButton) forControlEvents:UIControlEventTouchDragEnter];
+    [self.loginButton addTarget:self action:@selector(unselectOtherButton) forControlEvents:UIControlEventTouchDragExit|UIControlEventTouchUpInside];
+    self.loginButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.loginButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [self.loginButton setTitle:@"Stop procrastinating\nand" forState:UIControlStateNormal];
     [self.loginButton setTitleColor:[UIColor colorWithWhite:1.0 alpha:0.85] forState:UIControlStateNormal];
-    [self.loginButton setBackgroundColor:[UIColor colorWithRed:68.0/255.0 green:140.0/255.0 blue:203.0/255.0 alpha:0.85]];
-    self.loginButton.layer.cornerRadius = 4.0;
-//    self.loginButton.titleLabel.font = [UIFont systemFontOfSize:24.0];
-    self.loginButton.titleLabel.font = [UIFont fontWithName:@"Superclarendon-Regular" size:20.0];
-    self.loginButton.frame = (CGRect) {
-        .origin = CGPointZero,
-        .size = { .width = 290.0, .height = 44.0 }
-    };
-//    [self.loginButton sizeToFit];
+    self.loginButton.titleLabel.font = [UIFont fontWithName:@"Superclarendon-Black" size:24.0];
+    
+    //shadow stuff
+    // Constants
+//    static const CGFloat kHPTTitleLabelShadowOffsetWidth = 0;
+//    static const CGFloat kHPTTitleLabelShadowOffsetHeight = 10;
+//    static const CGFloat kHPTTitleLabelShadowRadius = 8.0;
+//    static const CGFloat kHPTTitleLabelShadowOpacity = 0.85;
+    
+//    self.loginButton.layer.shadowColor = [UIColor darkGrayColor].CGColor;
+//    self.loginButton.layer.shadowOffset = CGSizeMake(kHPTTitleLabelShadowOffsetWidth,
+//                                                    kHPTTitleLabelShadowOffsetHeight);
+//    self.loginButton.layer.shadowRadius = kHPTTitleLabelShadowRadius;
+//    self.loginButton.layer.shadowOpacity = kHPTTitleLabelShadowOpacity;
+    
+//    self.loginButton.frame = (CGRect) {
+//        .origin = CGPointZero,
+//        .size = { .width = 290.0, .height = 200.0 }
+//    };
+    [self.loginButton sizeToFit];
     [self.loginButton setCenter:(CGPoint) {
         .x = CGRectGetMidX(screenRect),
-        .y = CGRectGetMaxY(screenRect) - 150
+        .y = CGRectGetMidY(screenRect)-30
     }];
+    
+    self.loginButton2 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [self.loginButton2 addTarget:self action:@selector(loginButtonHandler:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.loginButton addTarget:self action:@selector(lightenOnTouch:) forControlEvents:UIControlEventTouchDown|UIControlEventTouchDragEnter];
+//    [self.loginButton addTarget:self action:@selector(darkenOnRelease:) forControlEvents:UIControlEventTouchUpInside|UIControlEventTouchDragExit];
+    [self.loginButton2 addTarget:self action:@selector(selectOtherButton2) forControlEvents:UIControlEventTouchDown];
+    [self.loginButton2 addTarget:self action:@selector(highlightOtherButton2) forControlEvents:UIControlEventTouchDragEnter];
+    [self.loginButton2 addTarget:self action:@selector(unselectOtherButton2) forControlEvents:UIControlEventTouchDragExit|UIControlEventTouchUpInside];
+    self.loginButton2.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.loginButton2.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [self.loginButton2 setTitle:@"Do It" forState:UIControlStateNormal];
+    [self.loginButton2 setTitleColor:[UIColor colorWithWhite:1.0 alpha:0.85] forState:UIControlStateNormal];
+    self.loginButton2.titleLabel.font = [UIFont fontWithName:@"Superclarendon-BlackItalic" size:40.0];
+    [self.loginButton2 sizeToFit];
+    [self.loginButton2 setCenter:(CGPoint) {
+        .x = CGRectGetMidX(screenRect),
+        .y = CGRectGetMaxY(self.loginButton.frame) + (self.loginButton2.frame.size.height/3)
+    }];
+    
     [self.view addSubview:self.loginButton];
+    [self.view addSubview:self.loginButton2];
 }
 
 - (IBAction)loginButtonHandler:(id)sender {
@@ -142,14 +144,54 @@
         } else if (user.isNew) {
             NSLog(@"User with facebook signed up and logged in!");
             self.loginButton.hidden = YES;
+            self.loginButton2.hidden = YES;
             UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:[[WHOTaskTableViewController alloc] initWithStyle:UITableViewStylePlain]];
             [self presentViewController:nav animated:NO completion:nil];
         } else {
             NSLog(@"User with facebook logged in!");
             self.loginButton.hidden = YES;
+            self.loginButton2.hidden = YES;
             UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:[[WHOTaskTableViewController alloc] initWithStyle:UITableViewStylePlain]];
             [self presentViewController:nav animated:NO completion:nil];
         }
+    }];
+}
+
+- (void) selectOtherButton {
+    NSLog(@"selecting button 2");
+    [self.loginButton2 setAlpha:.2];
+}
+
+- (void)unselectOtherButton {
+    NSLog(@"unselecting button 2");
+    [UIView animateWithDuration:.3 animations:^{
+        [self.loginButton2 setAlpha:1.0];
+    }];
+}
+
+- (void)highlightOtherButton {
+    NSLog(@"highlighting button 2");
+    [UIView animateWithDuration:.3 animations:^{
+        [self.loginButton2 setAlpha:.2];
+    }];
+}
+
+- (void) selectOtherButton2 {
+    NSLog(@"selecting button 1");
+    [self.loginButton setAlpha:.2];
+}
+
+- (void)unselectOtherButton2 {
+    NSLog(@"unselecting button 1");
+    [UIView animateWithDuration:.3 animations:^{
+        [self.loginButton setAlpha:1.0];
+    }];
+}
+
+- (void)highlightOtherButton2 {
+    NSLog(@"highlighting button 1");
+    [UIView animateWithDuration:.3 animations:^{
+        [self.loginButton setAlpha:.2];
     }];
 }
 
@@ -165,6 +207,7 @@
 }
 */
 
+/*
 - (void) lightenOnTouch:(id)sender {
     sender = (UIButton *) sender;
     CGFloat R,G,B,a;
@@ -182,6 +225,7 @@
         [sender setBackgroundColor:[UIColor colorWithRed:(R*255-30)/255 green:(G*255-30)/255 blue:(B*255-30)/255 alpha:a]];
     }];
 }
+*/
 
 - (void)didReceiveMemoryWarning
 {

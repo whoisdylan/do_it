@@ -18,7 +18,7 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.backgroundColor = [UIColor blackColor];
     
     //Parse things
     [Parse setApplicationId:@"Zl9asM3UZGnygzjwGrBeLI67zXfobzQoY7OSXnuz" clientKey:@"RQ5SPFUkR4QSdKoXXJl5bwAk5iCCRVbFxRGK0HNo"];
