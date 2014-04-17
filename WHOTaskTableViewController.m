@@ -44,6 +44,7 @@
         }
         [self sortTasks];
         [self.tableView reloadData];
+        [self checkForExpiredTasks];
     }];
     
     
@@ -60,6 +61,8 @@
     [self.tableView setRowHeight:85.0];
     [self.tableView registerNib:[UINib nibWithNibName:@"WHOTaskCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"TaskCell"];
     
+    //set timer to check if any tasks expire every 60 seconds
+    [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(checkForExpiredTasks) userInfo:nil repeats:YES];
 }
 
 - (void)newTask:(id)sender {
@@ -123,6 +126,45 @@
         NSDate* date1 = [formatter dateFromString:((WHOTask* )obj1).deadline];
         NSDate* date2 = [formatter dateFromString:((WHOTask* )obj2).deadline];
         return [date1 compare:date2];
+    }];
+}
+
+- (void)checkForExpiredTasks {
+    NSLog(@"Checking for expired tasks");
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat: @"eee',' M/d/yy 'at' h:mm a"];
+    for (int i = 0; i < [self.tasks count]; i++) {
+        WHOTask* currTask = [self.tasks objectAtIndex:i];
+        NSDate* currTaskDeadlineDate = [formatter dateFromString:currTask.deadline];
+        if ([currTaskDeadlineDate timeIntervalSinceNow] < 0.0) {
+            [self postFailureOfTask: currTask];
+            PFQuery* query = [PFQuery queryWithClassName:@"Task"];
+            [query getObjectInBackgroundWithId:currTask.pf_id block:^(PFObject *object, NSError *error) {
+                [object deleteInBackground];
+            }];
+            [self.tasks removeObjectAtIndex:i];
+            i--;
+        }
+        else {
+            //break because the list is sorted
+            break;
+        }
+    }
+    [self.tableView reloadData];
+}
+
+- (void)postFailureOfTask:(WHOTask *) task {
+    NSLog(@"Posting failure to Facebook");
+    NSString* facebookPost = [NSString stringWithFormat:@"Let it be known that on this day I have failed to complete the most important task of %@", task.task];
+    [FBRequestConnection startForPostStatusUpdate:facebookPost completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        if (!error) {
+            // Status update posted successfully to Facebook
+//            NSLog([NSString stringWithFormat:@"result: %@", result]);
+        } else {
+            // An error occurred, we need to handle the error
+            // See: https://developers.facebook.com/docs/ios/errors
+//            NSLog([NSString stringWithFormat:@"%@", error.description]);
+        }
     }];
 }
 
