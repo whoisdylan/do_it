@@ -69,8 +69,8 @@
     self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.titleLabel.text = @"Do It";
 //    self.titleLabel.font = [UIFont systemFontOfSize:50.0];
-    self.titleLabel.font = [UIFont fontWithName:@"Baskerville" size:72.0];
-    self.titleLabel.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:.85];
+    self.titleLabel.font = [UIFont fontWithName:@"Superclarendon-Regular" size:72.0];
+    self.titleLabel.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:.75];
     // Constants
     // The width of the shadow offset of our label.
     static const CGFloat kHPTTitleLabelShadowOffsetWidth = 1;
@@ -105,10 +105,11 @@
     [self.loginButton addTarget:self action:@selector(lightenOnTouch:) forControlEvents:UIControlEventTouchDown|UIControlEventTouchDragEnter];
     [self.loginButton addTarget:self action:@selector(darkenOnRelease:) forControlEvents:UIControlEventTouchUpInside|UIControlEventTouchDragExit];
     [self.loginButton setTitle:@"Stop procrastinating" forState:UIControlStateNormal];
-    [self.loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.loginButton setTitleColor:[UIColor colorWithWhite:1.0 alpha:0.85] forState:UIControlStateNormal];
     [self.loginButton setBackgroundColor:[UIColor colorWithRed:68.0/255.0 green:140.0/255.0 blue:203.0/255.0 alpha:0.85]];
     self.loginButton.layer.cornerRadius = 4.0;
-    self.loginButton.titleLabel.font = [UIFont systemFontOfSize:24.0];
+//    self.loginButton.titleLabel.font = [UIFont systemFontOfSize:24.0];
+    self.loginButton.titleLabel.font = [UIFont fontWithName:@"Superclarendon-Regular" size:20.0];
     self.loginButton.frame = (CGRect) {
         .origin = CGPointZero,
         .size = { .width = 290.0, .height = 44.0 }
@@ -168,7 +169,7 @@
     sender = (UIButton *) sender;
     CGFloat R,G,B,a;
     [[sender backgroundColor] getRed:&R green:&G blue:&B alpha:&a];
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:0.125 animations:^{
         [sender setBackgroundColor:[UIColor colorWithRed:(R*255+30)/255 green:(G*255+30)/255 blue:(B*255+30)/255 alpha:a]];
     }];
 }
@@ -177,7 +178,7 @@
     sender = (UIButton *) sender;
     CGFloat R,G,B,a;
     [[sender backgroundColor] getRed:&R green:&G blue:&B alpha:&a];
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:0.125 animations:^{
         [sender setBackgroundColor:[UIColor colorWithRed:(R*255-30)/255 green:(G*255-30)/255 blue:(B*255-30)/255 alpha:a]];
     }];
 }
