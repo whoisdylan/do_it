@@ -25,6 +25,19 @@
     if (self) {
         // Custom initialization
         self.tableView.backgroundColor = [UIColor darkGrayColor];
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+        UILabel* titleLabel = [[UILabel alloc] init];
+        [titleLabel setText:@"Do It"];
+        [titleLabel setFont:[UIFont fontWithName:@"Superclarendon-BlackItalic" size:24.0]];
+        [titleLabel setTextColor:[UIColor darkGrayColor]];
+        [titleLabel setAlpha:0.75];
+        [titleLabel.layer setShadowColor:[UIColor darkGrayColor].CGColor];
+        [titleLabel.layer setShadowOffset:(CGSize) { .width = 1.5, .height = 1.5 }];
+        [titleLabel.layer setShadowRadius:1.5];
+        [titleLabel.layer setShadowOpacity:.65];
+        [titleLabel sizeToFit];
+        [self.navigationItem setTitleView:titleLabel];
+//        self.title = @"Do It";
         self.tasks = [NSMutableArray array];
     }
     return self;
@@ -156,7 +169,7 @@
 
 - (void)postFailureOfTask:(WHOTask *) task {
     NSLog(@"Posting failure to Facebook");
-    NSString* facebookPost = [NSString stringWithFormat:@"Let it be known that on this day I have failed to complete the most important task of %@", task.task];
+    NSString* facebookPost = [NSString stringWithFormat:@"Let it be known that on this day I have failed to %@", task.task];
     [FBRequestConnection startForPostStatusUpdate:facebookPost completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         if (!error) {
             // Status update posted successfully to Facebook
