@@ -178,7 +178,7 @@
 
 - (void)postFailureOfTask:(WHOTask *) task {
     NSLog(@"Posting failure to Facebook");
-    NSArray* failureStrings = @[@"Let it be known that on this day I have failed to"];
+    NSArray* failureStrings = @[@"Let it be known that on this day I have failed to", @"I've let everyone down today, but most importantly I've let myself down when I failed to", @"Attention everyone, with deep regret and humility I must swallow my pride and inform you all that today I couldn't", @"Sometimes you think your trying your hardest, but it turns out you were just lying to yourself the entire time.  I learned that the hard way when I procrastinated too much and missed my deadline to", @"Dear everyone, today I procrastinated too much and failed to"];
     NSInteger failureStringIndex = arc4random()%[failureStrings count];
     NSString* facebookPost = [NSString stringWithFormat:@"%@ %@",failureStrings[failureStringIndex], task.task];
     NSLog(@"%@",facebookPost);
