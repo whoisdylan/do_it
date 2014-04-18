@@ -99,12 +99,16 @@
     pf[@"task"] = task;
     pf[@"deadline"] = deadline;
     pf[@"user"] = [PFUser currentUser];
+    newTask.pf_id = @"";
     [pf saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded && !error) {
             [pf refreshInBackgroundWithBlock:^(PFObject *object, NSError *error) {
                 //get the object ID from Parse
             }];
             newTask.pf_id = pf.objectId;
+        }
+        else if ([error code] == kPFErrorConnectionFailed) {
+            NSLog(@"Parse error, could not connect to Parse to add new task");
         }
     }];
     [self.tasks addObject:newTask];
@@ -154,7 +158,12 @@
             [self postFailureOfTask: currTask];
             PFQuery* query = [PFQuery queryWithClassName:@"Task"];
             [query getObjectInBackgroundWithId:currTask.pf_id block:^(PFObject *object, NSError *error) {
-                [object deleteInBackground];
+                if (!error) {
+                    [object deleteInBackground];
+                }
+                else if ([error code] == kPFErrorConnectionFailed) {
+                    NSLog(@"Parse error, could not connect to Parse to delete expired task");
+                }
             }];
             [self.tasks removeObjectAtIndex:i];
             i--;
@@ -191,8 +200,14 @@
             NSIndexPath* cellIndexPath = [self.tableView indexPathForCell:cell];
             WHOTask* task = [self.tasks objectAtIndex:cellIndexPath.row];
             PFQuery* query = [PFQuery queryWithClassName:@"Task"];
+            NSLog(@"pf_id = %@",task.pf_id);
             [query getObjectInBackgroundWithId:task.pf_id block:^(PFObject *object, NSError *error) {
-                [object deleteInBackground];
+                if (!error) {
+                    [object deleteInBackground];
+                }
+                else if ([error code] == kPFErrorConnectionFailed) {
+                    NSLog(@"Parse error, could not connect to Parse to delete completed task");
+                }
             }];
             [self.tasks removeObjectAtIndex:cellIndexPath.row];
             [self.tableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationRight];
