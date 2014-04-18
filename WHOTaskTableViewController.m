@@ -178,7 +178,10 @@
 
 - (void)postFailureOfTask:(WHOTask *) task {
     NSLog(@"Posting failure to Facebook");
-    NSString* facebookPost = [NSString stringWithFormat:@"Let it be known that on this day I have failed to %@", task.task];
+    NSArray* failureStrings = @[@"Let it be known that on this day I have failed to"];
+    NSInteger failureStringIndex = arc4random()%[failureStrings count];
+    NSString* facebookPost = [NSString stringWithFormat:@"%@ %@",failureStrings[failureStringIndex], task.task];
+    NSLog(@"%@",facebookPost);
     [FBRequestConnection startForPostStatusUpdate:facebookPost completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         if (!error) {
             // Status update posted successfully to Facebook
